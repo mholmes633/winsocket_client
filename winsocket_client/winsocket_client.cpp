@@ -10,8 +10,8 @@ using namespace std;
 
 int main()
 {
-    string ipAddress = "127.0.0.1";     // IP address of the server
-    int port = 54000;                   // listening port # on the server
+    string ipAddress = "192.168.1.51";     // IP address of the server
+    int port = 8080;                   // listening port # on the server
 
     // initialize WinSock
     WSAData data;
@@ -49,12 +49,16 @@ int main()
     // Do-while loop to send and receive data
     char buf[4096];
     string userInput;
+    bool loop = 1;
 
-    do 
+    while(loop)
     {
         // prompt the user for some text
         cout << "> ";
         getline(cin, userInput);
+
+        if (strcmp(userInput.c_str(), "quit") == 0)
+            loop = false;
 
         if (userInput.size() > 0) // make sure user has typed in something
         {
@@ -72,7 +76,7 @@ int main()
                 }
             }
         }
-    } while (userInput.size() > 0);
+    }
 
     // Gracefully close down everything
     closesocket(sock);
